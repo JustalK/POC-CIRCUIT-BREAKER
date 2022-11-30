@@ -33,7 +33,7 @@ const callApi2 = async (isOpen = true) => {
   }
 };
 
-app.get('/api', async (req, res) => {
+app.get('/', async (req, res) => {
   if (counter < CIRCUIT_BREAKER_CLOSED_THRESHOLD) {
     const message = await callApi2();
     return res.send({ message });
