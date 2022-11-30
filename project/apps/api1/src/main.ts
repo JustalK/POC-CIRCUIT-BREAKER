@@ -9,20 +9,31 @@ import axios from 'axios';
 
 const app = express();
 let counter = 0;
+let date_last_fail = null;
+const CIRCUIT_BREAKER_CLOSED_THRESHOLD = 3;
 
 const SERVER_API2_URL = `${process.env.NX_API_PROTOCOL}://${process.env.NX_API_HOST}:${process.env.NX_API_2_PORT}`;
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/api', async (req, res) => {
-  try {
-    const rsl = await axios.get(SERVER_API2_URL);
-    const { data } = rsl;
-    console.log(data);
-  } catch {
-    console.log('error');
+  if (counter < CIRCUIT_BREAKER_CLOSED_THRESHOLD) {
+    try {
+      const rsl = await axios.get(SERVER_API2_URL);
+      const { data } = rsl;
+      const { message } = data;
+      return res.send({ message });
+    } catch {
+      counter++;
+      date_last_fail = new Date();
+      return res.send({ message: `CIRCUIT OPEN (fail: ${counter})` });
+    }
+  } else {
+    const now = new Date();
+    const diffNowAndLastFail = now.getTime() - date_last_fail.getTime();
+    // Attempt
+    return res.send({ message: 'CIRCUIT CLOSED' });
   }
-  res.send({ message: counter });
 });
 
 const port = process.env.NX_API_1_PORT;

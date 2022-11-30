@@ -8,7 +8,7 @@ import * as express from 'express';
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Welcome to api2!' });
+  res.send({ message: 'CIRCUIT OPEN' });
 });
 
 const port = process.env.NX_API_2_PORT;
