@@ -1,6 +1,6 @@
 # POC-CIRCUIT-BREAKER
 
-This poc is an example of how to implement a circuit breaker using **Express** and **Node.js**. I have created a monorepository with two API using **NX**. The `api1` will be use to call the `api2`.
+This poc is an example of how to implement a circuit breaker for avoiding wasting time and resource when a part of the system fail. A circuit breaker is a kind of protection for operation that are likely to fail. You avoid waiting on timeouts for the client, and a broken circuit avoids putting load on a struggling server. I made this POC using **Express** and **Node.js**. I have created a monorepository with two API using **NX**. The `api1` will be use to call the `api2`.
 
 ## Plan of the presentation
 
