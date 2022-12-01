@@ -27,6 +27,8 @@ A circuit breaker main purpose is to prevent the calls made to a broken endpoint
 
 ![./documentation/flow.png](./documentation/flow.png)
 
+As we can see above, the call are made to th API2 only when the status of the circuit breaker is either OPEN or HALF-OPEN. In the case, the circuit breaker is CLOSED, we are not even calling the API2 and returning a return directly.
+
 #### Mermaid
 
 ![./documentation/mermaid.png](./documentation/mermaid.png)
